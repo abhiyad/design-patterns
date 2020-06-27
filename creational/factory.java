@@ -1,41 +1,44 @@
+package com.company;
 interface AnimalInterface{
-	void makeSound();
+    void makeSound();
 }
 
 class Tiger implements AnimalInterface{
-	@Override
-	public void makeSound(){
-		print("TIGER MAKES SSS");
-	}
+    @Override
+    public void makeSound(){
+        System.out.println("TIGER MAKES SSS");
+    }
 }
 
 class Duck implements AnimalInterface{
-	@Override
-	public void makeSound(){
-		print("Duck MAKES quack");
-	}
+    @Override
+    public void makeSound(){
+        System.out.println("Duck MAKES quack");
+    }
 }
 
-// /// / // / 
+// /// / // /
 
-public abstract class AnimalFactoryInterface{
-	public abstract AnimalInterface getAnimalType(String type) throws exception;
+abstract class AnimalFactoryInterface{
+    public abstract AnimalInterface getAnimalType(String type) throws ClassNotFoundException;
 }
 
 class ConcreteAnimalFactory extends AnimalFactoryInterface{
-	public AnimalInterface getAnimalType(String type){
-		if (type=="DUCK")return new Duck();
-		if (type=="Tiger")return new TIger();
-	}
-}	
-// // / / 
+    public AnimalInterface getAnimalType(String type) throws ClassNotFoundException {
+        if (type=="DUCK")return new Duck();
+        else if (type=="TIGER")return new Tiger();
+        else throw new ClassNotFoundException("NOT FOUND");
+    }
+}
+// // / /
+public class Design {
+    public static void main(String[] args) throws ClassNotFoundException {
+        AnimalFactoryInterface animalFactory = new ConcreteAnimalFactory();
+        AnimalInterface duck = animalFactory.getAnimalType("DUCK");
+        AnimalInterface tiger = animalFactory.getAnimalType("TIGER");
 
-class Client{
-	AnimalFactoryInterface animalFactory = new ConcreteAnimalFactory();
-	AnimalInterface duck = animalFactory.getAnimalType("DUCK");
-	AnimalInterface tiger = animalFactory.getAnimalType("tiger");
-
-	duck.makeSound();
-	tiger.makeSound();
+        duck.makeSound();
+        tiger.makeSound();
+    }
 
 }
