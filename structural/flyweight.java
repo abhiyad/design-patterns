@@ -36,32 +36,33 @@ class AntiTerrorist implements Player{
 // / / / /
 class PlayerFactory{
     Hashtable<String,Player> cache = new Hashtable<String,Player>();
-    public Player getPlayer(String type) throws NotActiveException {
+    Player p = null;
+    public Player getPlayer(String type){
         if(cache.containsKey(type))
-            return cache.get(type);
+            p = cache.get(type);
         else
         {
             if(type.equals("Terrorist")){
-                Terrorist player = new Terrorist();
-                cache.put("Terrorist",player);
+                p = new Terrorist();
+                cache.put("Terrorist",p);
             }
             else if(type.equals("AntiTerrorist")){
-                AntiTerrorist player = new AntiTerrorist();
-                cache.put("AntiTerrorist",player);
+                p= new AntiTerrorist();
+                cache.put("AntiTerrorist",p);
             }
-            else{
-                throw new NotActiveException("NOT FOUND !");
+            else {
+                System.out.println("NOT FOUND !");
             }
         }
-        return cache.get(type);
+        return p;
     }
 }
 
 public class Design{
-    public static void main(String[] args) throws NotActiveException {
+    public static void main(String[] args){
         PlayerFactory factory = new PlayerFactory();
         Terrorist t1 = (Terrorist) factory.getPlayer("Terrorist");
-        t1.assignWeapon("Desert EAgle");
+        t1.assignWeapon("Desert Eagle");
         t1.mission();
     }
 }
